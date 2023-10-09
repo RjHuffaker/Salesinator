@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Salesinator
 // @namespace    http://tampermonkey.net/
-// @version      0.2
-// @description  A simple script to automate the transfer of customer details from FieldRoutes to PestPac
+// @version      0.3
+// @description  A simple script to automate the transfer of customer details from PestRoutes to PestPac
 // @author       RjHuffaker
 // @match        app.pestpac.com/*
-// @match        dancanpest.fieldroutes.com/*
+// @match        dancanpest.pestroutes.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        window.focus
 // @grant        window.close
@@ -171,7 +171,7 @@
 
 
     const initializeSalesinator = () => {
-        if(urlContains(["dancanpest.fieldroutes.com"])){
+        if(urlContains(["dancanpest.pestroutes.com"])){
             frCustomers();
         } else if(urlContains(["app.pestpac.com/location/add.asp"])){
             focusListener();
