@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Salesinator
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.35
 // @description  A simple script to automate the transfer of customer details from PestRoutes to PestPac
 // @author       RjHuffaker
 // @match        app.pestpac.com/*
@@ -113,18 +113,19 @@
     }
 
     const getCustomer = () => {
+        const custId = document.getElementsByClassName('customerTitleSpan')[0].innerHTML.replace(/[\[\]]+/g, "").replace(" ","");
         const fname = document.getElementsByName('fname')[0].value;
         const lname = document.getElementsByName('lname')[0].value;
         const email = document.getElementsByName('email')[0].value;
-        const phone1 = document.getElementsByName('phone1')[0].value;
-        const phone2 = document.getElementsByName('phone2')[0].value;
+        const phone1 = document.getElementsByName('phone1')[0].value.replace(/[()\-]/g, "").replace(" ","");
+        const phone2 = document.getElementsByName('phone2')[0].value.replace(/[()\-]/g, "").replace(" ","");
         const address = document.getElementsByName('address')[0].value;
         const city = document.getElementsByName('city')[0].value;
         const state = 'TX';
         const zip = document.getElementsByName('zip')[0].value;
 
         return {
-            fname, lname, email, phone1, phone2, address, city, state, zip
+            custId, fname, lname, email, phone1, phone2, address, city, state, zip
         }
     }
 
@@ -139,6 +140,7 @@
 
             window.focus();
 
+            const prevAcct = document.getElementById('UserDef1');
             const fnameInput = document.getElementById('FName');
             const lnameInput = document.getElementById('LName');
             const emailInput = document.getElementById('EMail');
@@ -152,6 +154,7 @@
             const customer = new_value.customer;
 
             if(customer){
+                prevAcct.value = customer.custId;
                 fnameInput.value = customer.fname;
                 lnameInput.value = customer.lname;
                 emailInput.value = customer.email;
